@@ -15,8 +15,8 @@ public class JL_AVSync : MonoBehaviour
     [Tooltip("Use this audio source to debug how frequently the video/audio is going out of sync")]    
     public AudioSource errorSound;
 
-    [Tooltip("Start the video")]
-    public float startTime = 0.0f;
+    [Tooltip("Trim this much from the start of the video/audio")]
+    public float trim = 0.0f;
 
     [Tooltip("Use this to offset the audio from the video")]
     public float audioOffset = 0.0f;
@@ -39,7 +39,7 @@ public class JL_AVSync : MonoBehaviour
 
     IEnumerator PlayVideo(VideoPlayer lead, AudioSource follow)
     {
-        lead.time = startTime;
+        lead.time = trim;
         lead.Prepare();
 
         while (!lead.isPrepared)
@@ -49,7 +49,7 @@ public class JL_AVSync : MonoBehaviour
 
         lead.Play();
 
-        follow.time = startTime + audioOffset;
+        follow.time = trim + audioOffset;
         follow.Play();
 
         while (lead.isPlaying)
